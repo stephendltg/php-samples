@@ -56,7 +56,7 @@ CREATE TABLE `knex_migrations` (
   `batch` int(11) DEFAULT NULL,
   `migration_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `knex_migrations` (
 
 LOCK TABLES `knex_migrations` WRITE;
 /*!40000 ALTER TABLE `knex_migrations` DISABLE KEYS */;
-INSERT INTO `knex_migrations` VALUES (5,'20210508103936_orders.js',1,'2021-05-08 14:07:42'),(6,'20210508114620_customers.js',1,'2021-05-08 14:07:42');
+INSERT INTO `knex_migrations` VALUES (1,'20210508103936_orders.js',1,'2021-05-08 17:18:17'),(2,'20210508114620_customers.js',1,'2021-05-08 17:18:17'),(3,'20210508152550_products.js',2,'2021-05-08 17:33:07');
 /*!40000 ALTER TABLE `knex_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,6 +120,34 @@ LOCK TABLES `orders` WRITE;
 INSERT INTO `orders` VALUES (1,1,'processing',14.00,'2019-09-02 17:02:53','[[\"ref1\",{\"name\":\"Product 1\",\"quantity\":1,\"price\":14}]]'),(2,1,'processing',40.00,'2019-09-02 18:23:32','[[\"ref2\",{\"name\":\"Product 2\",\"quantity\":1,\"price\":10}],[\"ref3\",{\"name\":\"Product 3\",\"quantity\":2,\"price\":15}]]'),(3,2,'processing',120.00,'2019-09-04 10:32:51','[[\"ref2\",{\"name\":\"Product 2\",\"quantity\":10,\"price\":10}],[\"ref4\",{\"name\":\"Product 4\",\"quantity\":1,\"price\":20}]]'),(4,3,'Canceled',14.00,'2019-09-05 08:54:22','[[\"ref1\",{\"name\":\"Product 1\",\"quantity\":1,\"price\":14}]]');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `products`
+--
+
+DROP TABLE IF EXISTS `products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `products` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sku` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` float(8,2) NOT NULL,
+  `date_modified` timestamp NOT NULL DEFAULT current_timestamp(),
+  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `products`
+--
+
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (1,'ref1','Product 1',14.00,'2021-05-08 15:33:10','My beautifull product!'),(2,'ref2','Product 2',10.00,'2021-05-08 15:33:10','Maybe the revolution!'),(3,'ref3','Product 3',7.50,'2021-05-08 15:33:10','What?'),(4,'ref4','Product 4',20.00,'2021-05-08 15:33:10','I like this!');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -130,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-08 12:30:37
+-- Dump completed on 2021-05-08 15:33:23

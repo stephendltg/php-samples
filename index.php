@@ -72,11 +72,35 @@ function _echo( $var, $var_dump = 0 ){
 
 }
 
+/**
+ * Get Auth header
+ */
+function getAuthorizationHeader(){
+  $headers = null;
+  if (isset($_SERVER['Authorization'])) {
+      $headers = trim($_SERVER["Authorization"]);
+  }
+  else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
+      $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+  } elseif (function_exists('apache_request_headers')) {
+      $requestHeaders = apache_request_headers();
+      $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+      if (isset($requestHeaders['Authorization'])) {
+          $headers = trim($requestHeaders['Authorization']);
+      }
+  }
+  return $headers;
+}
 
-// Database
+
+/***********************************************/
+/*        CONSTANTS                            */
+/***********************************************/
+
 define('MYSQL', 'mysql:host=' . get_var( $_ENV["DB_HOST_PHP"], "127.0.0.1") . ';dbname=' . get_var( $_ENV["DB_TABLE"], "yoonest") );
 define('DB_USER', get_var( $_ENV["DB_USER"], "yoonest") );
 define('DB_PASSWORD', get_var( $_ENV["DB_PASSWORD"], "yoonest") );
+
 
 
 /***********************************************/
@@ -85,14 +109,17 @@ define('DB_PASSWORD', get_var( $_ENV["DB_PASSWORD"], "yoonest") );
 
 $app = new Silex\Application();
 
+$app->before(function () {
 
-$app['debug'] = get_var($_ENV["DEBUG"]) == 'true' ? true : false;
+  _echo(getAuthorizationHeader());
+});
+
 
 $app->get('/', function (){
-  $result = "hello";
-  $response = new \Symfony\Component\HttpFoundation\JsonResponse();
-  $response->setContent(json_encode(array('data' => $result), JSON_NUMERIC_CHECK));
-  return $response;
+  if ( glob( ABSPATH . 'public/index.html' ) )
+    return require(ABSPATH . 'public/index.html');
+  else
+    return 'You must compile app front end with npm build!';
 });
 
 /**
@@ -101,10 +128,10 @@ $app->get('/', function (){
 $app->get('/api/orders', function (){
 
   $result = array();
-  
+
   // DB QUERY
   try{
-    $db = new PDO(MYSQL , DB_USER, DB_PASSWORD );  
+  $db = new PDO(MYSQL , DB_USER, DB_PASSWORD );  
     $sth = $db->query('SELECT * FROM orders LEFT JOIN customers ON orders.customer = customers.id');
     $sth->setFetchMode(PDO::FETCH_ASSOC); 
     foreach( $sth as $order){
@@ -118,7 +145,8 @@ $app->get('/api/orders', function (){
     $db = null;
   } catch (Exception $e){
     _echo($e);
-    $app->abort(404, "Error TCP connection database");
+    http_response_code(503);
+    die();
   }
 
   // Response
@@ -129,7 +157,7 @@ $app->get('/api/orders', function (){
 
 
 /**
- * Route: api/order
+ * Route: api/order/{id}
  */
 $app->get('/api/order/{id}', function ($id) use ($app) {
 
@@ -151,7 +179,64 @@ $app->get('/api/order/{id}', function ($id) use ($app) {
     $db = null;
   } catch (Exception $e){
     _echo($e);
-    $app->abort(404, "Error TCP connection database");
+    http_response_code(503);
+    die();
+  }
+
+  // Response
+  $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+  $response->setContent(json_encode($result, JSON_NUMERIC_CHECK));
+  return $response;
+});
+
+/**
+ * Route: api/products
+ */
+$app->get('/api/products', function (){
+
+  $result = array();
+
+  // DB QUERY
+  try{
+  $db = new PDO(MYSQL , DB_USER, DB_PASSWORD );  
+    $sth = $db->query('SELECT * FROM products');
+    $sth->setFetchMode(PDO::FETCH_ASSOC); 
+    foreach( $sth as $product){
+      array_push($result, $product);
+    }
+    $db = null;
+  } catch (Exception $e){
+    _echo($e);
+    http_response_code(503);
+    die();
+  }
+
+  // Response
+  $response = new \Symfony\Component\HttpFoundation\JsonResponse();
+  $response->setContent(json_encode($result, JSON_NUMERIC_CHECK));
+  return $response;
+});
+
+/**
+ * Route: api/product/{sku}
+ */
+$app->get('/api/product/{sku}', function ($sku) use ($app){
+
+  $result = array();
+
+  // DB QUERY
+  try{
+  $db = new PDO(MYSQL , DB_USER, DB_PASSWORD );  
+    $sth = $db->query('SELECT * FROM products WHERE sku = "' . $sku . '"');
+    $sth->setFetchMode(PDO::FETCH_ASSOC); 
+    foreach( $sth as $product){
+      array_push($result, $product);
+    }
+    $db = null;
+  } catch (Exception $e){
+    _echo($e);
+    http_response_code(503);
+    die();
   }
 
   // Response
