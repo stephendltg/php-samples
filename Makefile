@@ -21,6 +21,9 @@ stop-production:
 	@echo "Stop production project ${PROJECT}..."
 	docker-compose down
 
+destroy-production:
+	docker-compose down -v --rmi all --remove-orphans
+
 nvm:
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM}/install.sh | bash
 
@@ -32,5 +35,6 @@ help:
 	@echo "install: Install ${PROJECT}"
 	@echo "production: Start production ${PROJECT}"
 	@echo "stop-production: Stop production ${PROJECT}"
+	@echo "destroy-production: Stop production && delete network && volumes && images${PROJECT}"
 	@echo "clean: Clean ${PROJECT}"
 	@echo "nvm: NVM install${PROJECT}"
