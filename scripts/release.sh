@@ -5,7 +5,7 @@ update_version() {
   echo "Updated ${1} version to ${2}"
 }
 
-current_version=$(node -p "require('./package').version")
+current_version=$(node -p "require('./composer.json').version")
 
 printf "Next version (current is $current_version)? "
 read next_version
@@ -17,21 +17,10 @@ fi
 
 next_ref="v$next_version"
 
-# Clean repository
-npm run clean
-
 git add -u
 
-# Action pre-commit
-npm run docker:start
-sleep 3
-npm test
-sleep 2
-npm run docker:stop
-
 # Update version
-update_version 'package.json' $next_version
-update_version 'package-lock.json' $next_version
+update_version 'composer.json' $next_version
 
 git commit -am "release $next_version"
 git tag $next_version

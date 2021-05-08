@@ -1,5 +1,7 @@
 {
+    "version": "0.0.1",
     "require": {
-        "silex/silex": "^2.3"
+        "silex/silex": "^2.3",
+        "symfony/dotenv": "^5.2"
     }
 }

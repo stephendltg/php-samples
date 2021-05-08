@@ -6,4 +6,4 @@
 # description: backup mariadb
 # =======
 
-docker exec epyo-db /usr/bin/mysqldump -u root --password=epyois100%MAGIC epyo > backup.sql
+docker exec yoonest-db /usr/bin/mysqldump -u root --password=yoonestis100%MAGIC yoonest > backup.sql

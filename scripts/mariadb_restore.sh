@@ -6,4 +6,4 @@
 # description: restore mariadb
 # =======
 
-cat backup.sql | docker exec -i epyo-db /usr/bin/mysql -u root --password=epyois100%MAGIC epyo
+cat backup.sql | docker exec -i yoonest-db /usr/bin/mysql -u root --password=yoonestis100%MAGIC yoonest

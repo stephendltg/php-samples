@@ -1,24 +1,24 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-main',
-    'version' => 'dev-main',
+    'pretty_version' => '0.0.1',
+    'version' => '0.0.1.0',
     'aliases' => 
     array (
     ),
-    'reference' => 'd786c37b511112ebb46aa8f90e626ea82584c906',
+    'reference' => NULL,
     'name' => '__root__',
   ),
   'versions' => 
   array (
     '__root__' => 
     array (
-      'pretty_version' => 'dev-main',
-      'version' => 'dev-main',
+      'pretty_version' => '0.0.1',
+      'version' => '0.0.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'd786c37b511112ebb46aa8f90e626ea82584c906',
+      'reference' => NULL,
     ),
     'pimple/pimple' => 
     array (
@@ -101,6 +101,15 @@
       array (
       ),
       'reference' => '5f38c8804a9e97d23e0c8d63341088cd8a22d627',
+    ),
+    'symfony/dotenv' => 
+    array (
+      'pretty_version' => 'v5.2.4',
+      'version' => '5.2.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '783f12027c6b40ab0e93d6136d9f642d1d67cd6b',
     ),
     'symfony/error-handler' => 
     array (
