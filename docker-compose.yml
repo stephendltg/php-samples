@@ -1,0 +1,81 @@
+version: '2.4'
+services:
+
+    # ---------------------------------
+    # TRAEFIK
+    # ---------------------------------
+    traefik:
+        image: traefik:2.4
+        volumes:
+          - ./traefik/traefik.yml:/etc/traefik/traefik.yml
+          - /var/run/docker.sock:/var/run/docker.sock
+        links:
+          - server
+        ports:
+         - "80:80"
+         - "127.0.0.1:8080:8080"
+
+    # ---------------------------------
+    # DB
+    # ---------------------------------
+    yoonest-db:
+      container_name: yoonest-db
+      image: mariadb:10.5.9
+      hostname: yoonest-db
+      command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci'
+      ]
+      restart: always
+      environment:
+        MYSQL_DATABASE: ${DB_NAME:-yoonest}
+        MYSQL_USER: ${DB_USER:-yoonest}
+        MYSQL_PASSWORD: ${DB_PASSWORD:-yoonest}
+        MYSQL_ROOT_PASSWORD:  ${DB_ROOT_PASSWORD:-yoonestis100%MAGIC}
+      volumes:
+        - vol-db-data:/var/lib/mysql
+      ports:
+        - '127.0.0.1:3306:3306'
+      labels:
+        - traefik.enable=false
+      
+
+    # ---------------------------------
+    # SERVER
+    # ---------------------------------
+    server:
+      hostname: server
+      build: .
+      restart: always
+      links:
+        - yoonest-db
+      labels:
+        - "traefik.http.routers.epyo.rule=PathPrefix(`/`)"
+        - traefik.http.services.epyo.loadBalancer.sticky.cookie.name=server_id
+        - traefik.http.services.epyo.loadBalancer.sticky.cookie.httpOnly=true
+      volumes:
+        - vol-server-data:/usr/src/app/static
+        - .:/app
+
+    # ---------------------------------
+    # Tools dev or integration
+    # ---------------------------------
+    mysql-admin:
+      container_name: mysql-admin
+      hostname: mysql-admin
+      image: phpmyadmin/phpmyadmin:5.1.0
+      environment:
+        PMA_HOST: yoonest-db
+        PMA_PORT: 3306
+        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-yoonestis100%MAGIC}
+        PMA_USER: ${DB_USER:-yoonest}
+        PMA_PASSWORD: ${DB_PASSWORD:-yoonest}
+      ports:
+        - '127.0.0.1:3380:80'
+      restart: always
+
+volumes:
+  vol-db-data:
+    driver: local
+  vol-server-data:
+    driver: local
