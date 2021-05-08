@@ -21,6 +21,8 @@ git add -u
 
 # Update version
 update_version 'composer.json' $next_version
+update_version 'package.json' $next_version
+update_version 'package-lock.json' $next_version
 
 git commit -am "release $next_version"
 git tag $next_version

@@ -30,6 +30,39 @@ sudo docker-compose up -d
 
 ---
 
+## FOR DEV LINUX OR MACOS ONLY
+
+
+### INSTALL
+
+**Install node environment:**: 
+> make nvm
+__Close your terminal et re-open this__
+> nvm install v14.16.1
+> nvm use v14.16.1
+> make install
+
+**Docker start:**
+> sudo make production
+> docker ps -a
+
+__Get container name prefix:__  yoonest-sample_*
+
+ex:
+> docker exec -it yoonest-sample_server_1 bash
+
+Enjoy use composer in bash
+
+
+### RELEASE
+
+> make svn
+
+### MIGRATE DATABASE
+
+
+---
+
 ## DATABASE
 
 ### BACKUP

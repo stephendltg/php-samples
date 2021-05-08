@@ -9,6 +9,9 @@ Dockerfile
 .gitattributes
 README.md
 env.*
+.nvmrc
+package.json
+package-lock.json
 
 # To prevent storing dev/temporary container data
 *.csv
