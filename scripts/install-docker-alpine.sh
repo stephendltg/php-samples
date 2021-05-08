@@ -1,6 +1,5 @@
 #!/bin/bash
 # =======
-# EPYO
 # version: 1
 # author: sdeletang
 # description: post-install alpine
