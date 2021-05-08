@@ -14,6 +14,8 @@ clean:
 production:
 	@echo "Production project ${PROJECT}..."
 	docker-compose up -d
+	sleep 5
+	sh scripts/mariadb_restore.sh
 
 dev:
 	@echo "Dev project ${PROJECT}..."
@@ -22,7 +24,7 @@ dev:
 	npm run migrate
 	npm run migrate:seed
 
-stop-production:
+stop:
 	@echo "Stop production project ${PROJECT}..."
 	docker-compose down
 
@@ -40,7 +42,7 @@ help:
 	@echo "install: Install ${PROJECT}"
 	@echo "dev: Start in development ${PROJECT}"
 	@echo "production: Start production ${PROJECT}"
-	@echo "stop-production: Stop production ${PROJECT}"
+	@echo "stop: Stop production ${PROJECT}"
 	@echo "destroy: Destroy && delete network && volumes && images${PROJECT}"
 	@echo "clean: Clean ${PROJECT}"
 	@echo "nvm: NVM install${PROJECT}"

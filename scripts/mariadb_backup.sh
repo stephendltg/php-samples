@@ -5,4 +5,4 @@
 # description: backup mariadb
 # =======
 
-docker exec yoonest-db /usr/bin/mysqldump -u root --password=yoonestis100%MAGIC yoonest > backup.sql
+docker exec yoonest-db /usr/bin/mysqldump -u root --password=yoonestis100%MAGIC yoonest > yoonest.sql

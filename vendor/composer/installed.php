@@ -190,6 +190,15 @@
       ),
       'reference' => 'c6c942b1ac76c82448322025e084cadc56048b4e',
     ),
+    'symfony/polyfill-intl-grapheme' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5601e09b69f26c1828b13b6bb87cb07cddba3170',
+    ),
     'symfony/polyfill-intl-idn' => 
     array (
       'pretty_version' => 'v1.22.1',
@@ -244,6 +253,24 @@
       ),
       'reference' => 'dc3063ba22c2a1fd2f45ed856374d79114998f91',
     ),
+    'symfony/property-access' => 
+    array (
+      'pretty_version' => 'v5.2.4',
+      'version' => '5.2.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3af8ed262bd3217512a13b023981fe68f36ad5f3',
+    ),
+    'symfony/property-info' => 
+    array (
+      'pretty_version' => 'v5.2.7',
+      'version' => '5.2.7.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f5850c8d4d987fd1990e2cbdf29f48c663c433e7',
+    ),
     'symfony/routing' => 
     array (
       'pretty_version' => 'v4.4.22',
@@ -252,6 +279,61 @@
       array (
       ),
       'reference' => '049e7c5c41f98511959668791b4adc0898a821b3',
+    ),
+    'symfony/security' => 
+    array (
+      'pretty_version' => 'v4.4.22',
+      'version' => '4.4.22.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd697f9a70fd344e9d005920cefd8868e77347051',
+    ),
+    'symfony/security-core' => 
+    array (
+      'replaced' => 
+      array (
+        0 => 'v4.4.22',
+      ),
+    ),
+    'symfony/security-csrf' => 
+    array (
+      'replaced' => 
+      array (
+        0 => 'v4.4.22',
+      ),
+    ),
+    'symfony/security-guard' => 
+    array (
+      'replaced' => 
+      array (
+        0 => 'v4.4.22',
+      ),
+    ),
+    'symfony/security-http' => 
+    array (
+      'replaced' => 
+      array (
+        0 => 'v4.4.22',
+      ),
+    ),
+    'symfony/service-contracts' => 
+    array (
+      'pretty_version' => 'v2.4.0',
+      'version' => '2.4.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f040a30e04b57fbcc9c6cbcf4dbaa96bd318b9bb',
+    ),
+    'symfony/string' => 
+    array (
+      'pretty_version' => 'v5.2.6',
+      'version' => '5.2.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ad0bd91bce2054103f5eaa18ebeba8d3bc2a0572',
     ),
     'symfony/var-dumper' => 
     array (
