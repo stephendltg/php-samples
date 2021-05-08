@@ -43,7 +43,7 @@ __Close your terminal et re-open this__
 > make install
 
 **Docker start:**
-> sudo make production
+> sudo make dev
 > docker ps -a
 
 __Get container name prefix:__  yoonest-sample_*

@@ -15,6 +15,13 @@ production:
 	@echo "Production project ${PROJECT}..."
 	docker-compose up -d
 
+dev:
+	@echo "Dev project ${PROJECT}..."
+	docker-compose up -d --build
+	sleep 2
+	npm run migrate
+	npm run migrate:seed
+
 stop-production:
 	@echo "Stop production project ${PROJECT}..."
 	docker-compose down
@@ -31,8 +38,10 @@ svn:
 
 help: 
 	@echo "install: Install ${PROJECT}"
+	@echo "dev: Start in development ${PROJECT}"
 	@echo "production: Start production ${PROJECT}"
 	@echo "stop-production: Stop production ${PROJECT}"
 	@echo "destroy-production: Stop production && delete network && volumes && images${PROJECT}"
 	@echo "clean: Clean ${PROJECT}"
 	@echo "nvm: NVM install${PROJECT}"
+	@echo "svn: Release app${PROJECT}"
