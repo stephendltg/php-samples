@@ -26,7 +26,7 @@ stop-production:
 	@echo "Stop production project ${PROJECT}..."
 	docker-compose down
 
-destroy-production:
+destroy:
 	docker-compose down -v --rmi all --remove-orphans
 
 nvm:
@@ -41,7 +41,7 @@ help:
 	@echo "dev: Start in development ${PROJECT}"
 	@echo "production: Start production ${PROJECT}"
 	@echo "stop-production: Stop production ${PROJECT}"
-	@echo "destroy-production: Stop production && delete network && volumes && images${PROJECT}"
+	@echo "destroy: Destroy && delete network && volumes && images${PROJECT}"
 	@echo "clean: Clean ${PROJECT}"
 	@echo "nvm: NVM install${PROJECT}"
 	@echo "svn: Release app${PROJECT}"
