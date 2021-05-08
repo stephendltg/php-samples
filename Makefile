@@ -18,7 +18,7 @@ production:
 dev:
 	@echo "Dev project ${PROJECT}..."
 	docker-compose up -d --build
-	sleep 2
+	sleep 5
 	npm run migrate
 	npm run migrate:seed
 
