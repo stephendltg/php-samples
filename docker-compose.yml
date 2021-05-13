@@ -50,9 +50,9 @@ services:
       links:
         - yoonest-db
       labels:
-        - "traefik.http.routers.yoonest.rule=PathPrefix(`/`)"
-        - traefik.http.services.yoonest.loadBalancer.sticky.cookie.name=server_id
-        - traefik.http.services.yoonest.loadBalancer.sticky.cookie.httpOnly=true
+        - "traefik.http.routers.${NAME:-yoonest}.rule=PathPrefix(`/`)"
+        - traefik.http.services.${NAME:-yoonest}.loadBalancer.sticky.cookie.name=server_id
+        - traefik.http.services.${NAME:-yoonest}.loadBalancer.sticky.cookie.httpOnly=true
       volumes:
         - vol-server-data:/usr/src/app/static
         - .:/app
