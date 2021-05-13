@@ -28,6 +28,14 @@ or
 sudo docker-compose up -d
 ```
 
+And then point your browser to `http://localhost`.
+
+You can then scale the server to multiple instances:
+
+```bash
+sudo docker-compose up -d --scale=server=3
+```
+
 ---
 
 ## FOR DEV LINUX OR MACOS ONLY
