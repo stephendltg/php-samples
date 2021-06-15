@@ -2,8 +2,10 @@ FROM php:8.0-apache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-EXPOSE 80
-WORKDIR /app
+EXPOSE 80 8000
+
+RUN mkdir -p /app/web
+WORKDIR /app/web
 
 # git, unzip & zip are for composer
 RUN apt-get update -qq && \
@@ -17,6 +19,7 @@ RUN apt-get update -qq && \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libxml2-dev \
     unzip \
     zip \
     zlib1g-dev && \

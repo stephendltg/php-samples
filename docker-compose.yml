@@ -12,7 +12,7 @@ services:
         links:
           - server
         ports:
-         - "80:80"
+         - "3000:80"
          - "127.0.0.1:8080:8080"
 
     # ---------------------------------
@@ -43,6 +43,25 @@ services:
     # ---------------------------------
     # SERVER
     # ---------------------------------
+    # server:
+    #   hostname: server
+    #   build: .
+    #   restart: always
+    #   links:
+    #     - mariadb
+    #   labels:
+    #     - "traefik.http.routers.${NAME:-app}.rule=PathPrefix(`/`)"
+    #     - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.name=server_id
+    #     - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.httpOnly=true
+    #   volumes:
+    #     - vol-server-data:/usr/src/app/static
+    #     - ./app:/app/web
+
+    # ---------------------------------
+    # LARAVEL
+    # 
+    # git clone https://github.com/laravel/laravel.git laravel
+    # ---------------------------------
     server:
       hostname: server
       build: .
@@ -53,9 +72,13 @@ services:
         - "traefik.http.routers.${NAME:-app}.rule=PathPrefix(`/`)"
         - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.name=server_id
         - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.httpOnly=true
+      command: bash -c "
+        && composer install
+        && php artisan serve --host=0.0.0.0 --port=8000"
       volumes:
-        - vol-server-data:/usr/src/app/static
-        - ./app:/app
+        - ./laravel:/app/web
+      ports:
+        - "8000:8000"
 
     # ---------------------------------
     # DRUPAL
