@@ -73,7 +73,7 @@ services:
         - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.name=server_id
         - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.httpOnly=true
       command: bash -c "
-        && composer install
+        composer install
         && php artisan serve --host=0.0.0.0 --port=8000"
       volumes:
         - ./laravel:/app/web

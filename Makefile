@@ -11,7 +11,7 @@ install:
 clean:
 	@echo "Clean project ${PROJECT}..."
 	rm -rf ./node_modules
-	rm -rf ./laravel/vendor
+	sudo rm -rf ./laravel/vendor
 	docker-compose down -v
 
 production:
