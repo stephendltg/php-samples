@@ -36,7 +36,7 @@ COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY errors /errors
 COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY conf/apache.conf /etc/apache2/conf-available/z-app.conf
-COPY info.php /app/info.php
+COPY info.php /app/web/info.php
 
 RUN a2enmod rewrite remoteip && \
     a2enconf z-app
