@@ -5,4 +5,4 @@
 # description: restore mariadb
 # =======
 
-cat yoonest.sql | docker exec -i yoonest-db /usr/bin/mysql -u root --password=yoonestis100%MAGIC yoonest
+cat mariadb.sql | docker exec -i mariadbdb /usr/bin/mysql -u root --password=user database

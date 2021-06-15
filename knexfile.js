@@ -9,9 +9,9 @@ module.exports = {
     client: 'mysql',
     connection: {
       host : process.env.DB_HOST || '127.0.0.1',
-      database: process.env.DB_TABLE || 'yoonest',
-      user:     process.env.DB_USER || 'yoonest',
-      password: process.env.DB_PASS ||  'yoonest'
+      database: process.env.DB_TABLE || 'database',
+      user:     process.env.DB_USER || 'user',
+      password: process.env.DB_PASS ||  'user'
     },
     pool: {
       min: 2,

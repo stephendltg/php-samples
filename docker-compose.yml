@@ -18,20 +18,20 @@ services:
     # ---------------------------------
     # DB
     # ---------------------------------
-    yoonest-db:
-      container_name: yoonest-db
+    mariadb:
+      container_name: mariadb
       image: mariadb:10.5.9
-      hostname: yoonest-db
+      hostname: mariadb
       command: [
         '--character-set-server=utf8mb4',
         '--collation-server=utf8mb4_unicode_ci'
       ]
       restart: always
       environment:
-        MYSQL_DATABASE: ${DB_NAME:-yoonest}
-        MYSQL_USER: ${DB_USER:-yoonest}
-        MYSQL_PASSWORD: ${DB_PASSWORD:-yoonest}
-        MYSQL_ROOT_PASSWORD:  ${DB_ROOT_PASSWORD:-yoonestis100%MAGIC}
+        MYSQL_DATABASE: ${DB_NAME:-database}
+        MYSQL_USER: ${DB_USER:-user}
+        MYSQL_PASSWORD: ${DB_PASSWORD:-user}
+        MYSQL_ROOT_PASSWORD:  ${DB_ROOT_PASSWORD:-user}
       volumes:
         - vol-db-data:/var/lib/mysql
       ports:
@@ -48,14 +48,28 @@ services:
       build: .
       restart: always
       links:
-        - yoonest-db
+        - mariadb
       labels:
-        - "traefik.http.routers.${NAME:-yoonest}.rule=PathPrefix(`/`)"
-        - traefik.http.services.${NAME:-yoonest}.loadBalancer.sticky.cookie.name=server_id
-        - traefik.http.services.${NAME:-yoonest}.loadBalancer.sticky.cookie.httpOnly=true
+        - "traefik.http.routers.${NAME:-app}.rule=PathPrefix(`/`)"
+        - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.name=server_id
+        - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.httpOnly=true
       volumes:
         - vol-server-data:/usr/src/app/static
-        - .:/app
+        - ./app:/app
+
+    # ---------------------------------
+    # DRUPAL
+    # ---------------------------------
+    # server:
+    #   hostname: server
+    #   image: drupal
+    #   restart: always
+    #   links:
+    #     - mariadb
+    #   labels:
+    #     - "traefik.http.routers.${NAME:-app}.rule=PathPrefix(`/`)"
+    #     - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.name=server_id
+    #     - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.httpOnly=true
 
     # ---------------------------------
     # Tools dev or integration
@@ -65,11 +79,11 @@ services:
       hostname: mysql-admin
       image: phpmyadmin/phpmyadmin:5.1.0
       environment:
-        PMA_HOST: yoonest-db
+        PMA_HOST: mariadb
         PMA_PORT: 3306
-        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-yoonestis100%MAGIC}
-        PMA_USER: ${DB_USER:-yoonest}
-        PMA_PASSWORD: ${DB_PASSWORD:-yoonest}
+        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-user}
+        PMA_USER: ${DB_USER:-user}
+        PMA_PASSWORD: ${DB_PASSWORD:-user}
       ports:
         - '127.0.0.1:3380:80'
       restart: always

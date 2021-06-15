@@ -1,7 +1,7 @@
 {
-  "name": "yoonest-sample",
+  "name": "php-sample",
   "version": "0.0.1",
-  "description": "Yonnest sample",
+  "description": "Php app",
   "main": "index.js",
   "scripts": {
     "test": "mocha --exit -t 10000 -R spec",
