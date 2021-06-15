@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stephendltg/yoonest-sample.git"
+    "url": "git+https://github.com/stephendltg/php-samples.git"
   },
   "author": "stephendltg",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/stephendltg/yoonest-sample/issues"
   },
-  "homepage": "https://github.com/stephendltg/yoonest-sample#readme",
+  "homepage": "https://github.com/stephendltg/php-samples#readme",
   "devDependencies": {
     "dotenv": "^9.0.0",
     "knex": "^0.95.4",
