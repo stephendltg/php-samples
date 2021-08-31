@@ -20,16 +20,33 @@ RUN apt-get update -qq && \
     libjpeg-dev \
     libfreetype6-dev \
     libxml2-dev \
+    libpq-dev \
     unzip \
     zip \
     zlib1g-dev && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# PHP Extensions
+# PHP support GD
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
-RUN docker-php-ext-install -j$(nproc) intl opcache pdo_mysql
+
+# PHP extensions
+RUN docker-php-ext-install -j$(nproc) intl opcache
+
+# PHP support mysql/mariadb
+RUN docker-php-ext-install mysqli pdo_mysql
+
+# PHP support postgres
+RUN docker-php-ext-install pdo_pgsql
+
+# PHP Support de apcu
+RUN pecl install apcu && docker-php-ext-enable apcu
+
+# PHP Support de redis
+RUN pecl install redis && docker-php-ext-enable redis
+
+# PHP configuration
 COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
