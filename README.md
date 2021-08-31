@@ -1,4 +1,4 @@
-# yoonest-sample
+# php-sample
 
 ## POST INSTALL
 
