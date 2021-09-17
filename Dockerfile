@@ -46,9 +46,10 @@ RUN pecl install apcu && docker-php-ext-enable apcu
 # PHP Support de redis
 RUN pecl install redis && docker-php-ext-enable redis
 
-# X DEBUG
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini;
+# Xdebug (disabled by default, but installed if required)
+RUN pecl install xdebug-2.9.7 && docker-php-ext-enable xdebug
+ADD conf/xdebug.ini /usr/local/etc/php/conf.d/
+
 
 # PHP configuration
 COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
