@@ -58,8 +58,6 @@ services:
     #     - "traefik.http.routers.${NAME:-app}.rule=PathPrefix(`/`)"
     #     - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.name=server_id
     #     - traefik.http.services.${NAME:-app}.loadBalancer.sticky.cookie.httpOnly=true
-    #   environment:
-    #     XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
     #   volumes:
     #     - vol-server-data:/usr/src/app/static
     #     - ./app:/app/web
@@ -85,8 +83,6 @@ services:
       command: bash -c "
         composer install
         && php artisan serve --host=0.0.0.0 --port=8000"
-      environment:
-        XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
       volumes:
         - ./laravel:/app/web
       ports:
