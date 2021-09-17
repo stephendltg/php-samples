@@ -52,6 +52,13 @@ stop:
 destroy:
 	docker-compose down -v --rmi all --remove-orphans
 
+## logs	:	View containers logs.
+##		You can optinally pass an argument with the service name to limit logs
+##		logs php	: View `php` container logs.
+##		logs nginx php	: View `nginx` and `php` containers logs.
+logs:
+	docker-compose logs -f $(filter-out $@,$(MAKECMDGOALS))
+
 nvm:
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM}/install.sh | bash
 
