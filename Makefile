@@ -2,6 +2,20 @@
 PROJECT:= $(shell node -p "require('./package.json').name")
 NVM=v0.38.0
 NODE=v14.16.1
+isDocker := $(shell docker info > /dev/null 2>&1 && echo 1)
+user := $(shell id -u)
+group := $(shell id -g)
+
+ifeq ($(isDocker), 1)
+	dc := USER_ID=$(user) GROUP_ID=$(group) docker-compose
+	de := docker-compose exec
+	dr := $(dc) run --rm
+	sy := $(de) php bin/console
+	php := $(dr) --no-deps php
+else
+	sy := php bin/console
+	php :=
+endif
 
 install: 
 	@echo "Installing node project ${PROJECT}..."
@@ -19,6 +33,10 @@ production:
 	docker-compose up -d
 	sleep 5
 	sh scripts/mariadb_restore.sh
+    
+.PHONY: devel
+devel: 
+	$(dc) up
 
 dev:
 	@echo "Dev project ${PROJECT}..."
