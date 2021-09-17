@@ -39,7 +39,7 @@ services:
       labels:
         - traefik.enable=false
       healthcheck:
-        test: "/usr/bin/mysql --user=${DB_USER} --password=${DB_PASS} --execute \"SHOW DATABASES;\""
+        test: "/usr/bin/mysql --user=${DB_USER:-user} --password=${DB_PASS:-user} --execute \"SHOW DATABASES;\""
         interval: 3s
         timeout: 1s
         retries: 5
