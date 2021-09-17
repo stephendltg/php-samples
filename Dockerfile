@@ -46,6 +46,9 @@ RUN pecl install apcu && docker-php-ext-enable apcu
 # PHP Support de redis
 RUN pecl install redis && docker-php-ext-enable redis
 
+# X DEBUG
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 # PHP configuration
 COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
