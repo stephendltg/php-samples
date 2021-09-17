@@ -60,5 +60,15 @@ COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY conf/apache.conf /etc/apache2/conf-available/z-app.conf
 COPY info.php /app/web/info.php
 
+# On désactive xdebug for prod
+# RUN printf '%s%s' ";" "$(cat /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini)" > "/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+
+ARG USER_ID
+ARG GROUP_ID
+
+RUN groupadd -f --gid $GROUP_ID user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+USER user
+
 RUN a2enmod rewrite remoteip && \
     a2enconf z-app
