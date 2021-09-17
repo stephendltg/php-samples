@@ -52,6 +52,30 @@ stop:
 destroy:
 	docker-compose down -v --rmi all --remove-orphans
 
+## start	:	Start containers without updating.
+start:
+	@echo "Starting containers for $(PROJECT) from where you left off..."
+	@docker-compose start
+
+## stop	:	Stop containers.
+stop:
+	@echo "Stopping containers for $(PROJECT)..."
+	@docker-compose stop
+
+
+## prune	:	Remove containers and their volumes.
+##		You can optionally pass an argument with the service name to prune single container
+##		prune mariadb	: Prune `mariadb` container and remove its volumes.
+##		prune mariadb solr	: Prune `mariadb` and `solr` containers and remove their volumes.
+prune:
+	@echo "Removing containers for $(PROJECT)..."
+	@docker-compose down -v $(filter-out $@,$(MAKECMDGOALS))
+
+## ps	:	List running containers.
+ps:
+	@docker ps --filter name='$(PROJECT)*'
+
+
 ## logs	:	View containers logs.
 ##		You can optinally pass an argument with the service name to limit logs
 ##		logs php	: View `php` container logs.
